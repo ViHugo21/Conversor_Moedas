@@ -1,32 +1,27 @@
 package com.example;
 
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
 import com.google.gson.JsonObject;
 
 public class Conversor {
     
-    JsonObject conversion_rates;
-    String moeda1;
-    String moeda2;
-    float valorInicial;
-    float valorConvertido;
+    private JsonObject conversion_rates;
+    private String moeda1;
+    private String moeda2;
+    private float valorInicial;
+    private float valorConvertido;
 
 
     public Conversor (String moeda1, String moeda2, float valorInicial, JsonObject conversion_rates) {
-        setConversion_rates(conversion_rates);
         setMoeda1(moeda1);
         setMoeda2(moeda2);
         setValorInicial(valorInicial);
         converterMoeda(valorInicial, conversion_rates.get(moeda2).getAsFloat());
     }
 
-    public Object getConversion_rates() {
+    public JsonObject getConversion_rates() {
         return conversion_rates;
-    }
-    private void setConversion_rates(Object conversion_rates) {
-        this.conversion_rates = (JsonObject) conversion_rates;
     }
     
 
@@ -75,7 +70,9 @@ public class Conversor {
         boolean moedaEscolhida = false;
         String[] opcoesMoeda = {"USD", "EUR", "JPY", "ARS", "BRL"};
         String moeda = "USD";
+        @SuppressWarnings("resource")
         Scanner ler = new Scanner(System.in);
+        
         try {
             do {
                 
@@ -97,11 +94,62 @@ public class Conversor {
 
             return moeda;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             System.out.println("Ocorreu um erro ao selecionar a moeda");
             System.out.println("Será atribuido a escolha padrão USD");
             return moeda;
         }
             
+    }
+
+    static float valorInicial () {
+        
+        @SuppressWarnings("resource")
+        Scanner ler = new Scanner(System.in);
+        
+        try {
+            System.out.println("Qual valor gostaria de converter ?");
+            return Float.parseFloat(ler.nextLine().replace(',', '.'));   
+        } catch (Exception e) {
+            System.out.println("Ocorreu um erro ao receber o valor");
+            System.out.println("O valor será definido para 1");
+            return 1;
+        }
+    }
+
+    static boolean repetir () {
+        
+        @SuppressWarnings("resource")
+        Scanner input = new Scanner(System.in);
+
+        String resposta = "";
+        
+        try {
+            System.out.println("Deseja fazer outra conversão ? S/N");
+            resposta = input.nextLine().toLowerCase();
+            switch (resposta) {
+                case "sim":
+                    return true;
+                case "s":
+                    return true;
+                case "n":
+                    return false;
+                case "não":
+                    return false;
+                case "nao":
+                    return false;
+                default:
+                    System.out.println("Desculpe, não entendi sua resposta, encerrando programa");
+                    return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Desculpe ocorreu um erro, encerrando repetição do programa");
+            System.out.println(resposta);
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            return false;
+        }
+        
     }
 
     @Override
