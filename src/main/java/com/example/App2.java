@@ -27,54 +27,15 @@ public class App2 {
             System.out.println("Bem vindo ao app Conversor de moedas Java");
             System.out.println("Qual moeda gostaria de converter ?");
 
-        try {
-            do {
-                
-                System.out.println("Dólar americano (USD)");
-                System.out.println("Euro (EUR)");
-                System.out.println("Iene japonês (JPY)");
-                System.out.println("Peso argentino (ARS)");
-                System.out.println("Real brasileiro (BRL)");
-                System.out.println("Por favor digite apenas a sigla da moeda de sua escolha");
-                moeda1 = ler.nextLine();
-                moeda1 = moeda1.toUpperCase();
-                for(String m: opcoesMoeda) {
-                    if (moeda1.equals(m)) {
-                        moeda1Escolhida = true;
-                        break;
-                    } 
-                }
-            } while (!moeda1Escolhida);
+            moeda1 = Conversor.escolherMoeda();
 
-            do {
-                System.out.println("Para qual moeda gostaria de converter ?");
-                System.out.println("Dólar americano (USD)");
-                System.out.println("Euro (EUR)");
-                System.out.println("Iene japonês (JPY)");
-                System.out.println("Peso argentino (ARS)");
-                System.out.println("Real brasileiro (BRL)");
-                System.out.println("Por favor digite apenas a sigla da moeda de sua escolha");
-                moeda2 = ler.nextLine();
-                moeda2 = moeda2.toUpperCase();
-                if (moeda2.equals(moeda1)) {
-                    System.out.println("Favor escolher outra opção");
-                } else {
-                    for(String m: opcoesMoeda) {
-                        if (moeda2.equals(m)) {
-                            moeda2Escolhida = true;
-                            break;
-                        } 
-                    }
-                }
-            } while (!moeda2Escolhida);
+            System.out.println("Para qual moeda gostaria de converter ?");
+
+            moeda2 = Conversor.escolherMoeda();
 
             System.out.println("Qual valor gostaria de converter ?");
             valorInicial = ler.nextFloat();
 
-
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
                 
                 HttpClient client = HttpClient.newHttpClient();
 
